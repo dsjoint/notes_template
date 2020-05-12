@@ -1,0 +1,232 @@
+\documentclass[onecolumn,11pt,a4paper]{article}
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+% -------------------------------------------------------------------- %
+% Debug mode/ clean mode:
+% -------------------------------------------------------------------- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifdebug
+%
+\debugtrue
+%\debugfalse
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage[utf8]{inputenc}        % correct understanding of the input
+\usepackage{lmodern}               % using modern encoding for the output
+\usepackage[T1]{fontenc}           % and correct encoding of the out font
+\usepackage[english]{babel}
+
+%\usepackage{todonotes}
+\ifdebug
+\usepackage[top=1.35in, bottom=1.5in, left=1in, right=1in, headheight=14.5pt, showframe]{geometry}  % set the margins
+
+\else
+\usepackage[top=1.35in, bottom=1.5in, left=1in, right=1in, headheight=14.5pt]{geometry}
+\fi
+\usepackage{latexsym}              % symbols
+\usepackage{amsmath}               % great math stuff
+\usepackage{amssymb}               % great math symbols
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % for theorems, 
+
+\usepackage{amsbsy}       % other symbols
+% Experimental command, from http://tex.stackexchange.com/a/51883/97964
+\allowdisplaybreaks
+% bbm package for \mathbbm{1} for indicator functions, http://tex.stackexchange.com/a/26640/97964
+\usepackage{bbm}
+
+% Use TikZ figures. They are written in external files tikz_figure_...tex
+\usepackage{tikz}                  % to make drawing with TikZ
+\usetikzlibrary{arrows,positioning,shapes}
+% Enf ot TikZ libraries
+\usepackage{tikzsymbols}
+
+\usepackage{enumerate}             % for the \enumerate command
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\usepackage{xparse}                % more robust \newcommand
+\usepackage{hyperref}              % hyperlinks
+\usepackage{url}
+
+\usepackage{color, xcolor}                 % use colors with, e.g., \textcolor{red}{text}
+\definecolor{darkgray}{rgb}{0.15,0.15,0.15}   % Define a new color rgb(38, 38, 38)
+\definecolor{lightgray}{rgb}{0.94,0.94,0.94}  % Define a new color rgb(239, 239, 239)
+\definecolor{lightlightgray}{rgb}{0.97,0.97,0.97}  % Define a new color rgb(247, 247, 247)
+\definecolor{darkred}{rgb}{0.80,0.00,0.00}    % Define a new color rgb(204, 0, 0)
+\definecolor{darkgreen}{rgb}{0.00,0.70,0.00}    % Define a new color rgb(0,178,0)
+\definecolor{darkblue}{rgb}{0.00,0.00,0.70}    % Define a new color rgb(0,0,178)
+
+\ifdebug
+\pagecolor{gray}
+\usepackage[left]{showlabels}
+\renewcommand{\showlabelfont}{\ttfamily\tiny}
+\fi
+
+% remove pagebreak after chapter
+
+%
+
+% font and math style
+\usepackage[p,osf]{cochineal}
+\usepackage[scale=.95,type1]{cabin}
+\usepackage[cochineal,bigdelims,cmintegrals,vvarbb]{newtxmath}
+\usepackage[zerostyle=c,scaled=.94]{newtxtt}
+\usepackage[cal=boondoxo]{mathalfa}
+%
+
+\usepackage{graphicx}              % to include figures
+\graphicspath{{fig/}}              % directory in which figures are stored
+\usepackage{caption}               % add a caption to figures
+\usepackage{subcaption}            % and allow multi figures
+\usepackage{multicol}              % multi column environment
+\usepackage{float}                 % allow more control to float and figures positions
+\usepackage{framed}                % \framed command to frame an important part
+\usepackage[framemethod=tikz]{mdframed}
+%\usepackage{mathpazo}               % charter, fourier, mathpazo, times
+\usepackage{enumitem}              % For \begin{enumerate}, switch back to itemize if it fails
+\usepackage{glossaries}            % To create glossaries
+
+% Custom package for the better footnote symbols, http://ctan.org/pkg/footmisc
+\usepackage[bottom]{footmisc}
+% \usepackage[perpage,para,symbol*]{footmisc}
+
+% Tips from http://tex.stackexchange.com/a/205133/97964
+%\usepackage[nameinlink]{cleveref}
+
+
+% Various theorems, numbered by section (required amsthm)
+\numberwithin{equation}{section}
+%
+\theoremstyle{plain}  % Plain style for theorem, defn, lemma, proposition, corollary
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{question}{Question}[section]
+
+\theoremstyle{remark}  % Remark style for remark, example, examples
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{ex}[thm]{Example}
+
+% Custom theorem and lemma
+\theoremstyle{plain}
+\newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric
+  }
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{customthm}{Theorem}
+\newcustomtheorem{customlem}{Lemma}
+\newcustomtheorem{customcor}{Corollary}
+
+
+\usepackage{lastpage,fancyhdr}     % customize the headers and footers
+\pagestyle{fancy}
+\fancyhf{} %delete everything
+\renewcommand{\headrulewidth}{0.5pt} % 0.5pt
+\renewcommand{\footrulewidth}{0.3pt} % 0.3pt
+\fancyhead[R]{\small\nouppercase\leftmark} %section title
+\fancyhead[L]{\thepage} %page number on all pages
+
+
+%% Custom commands
+% horizontal lines, as a <hr> tag in HTML
+\providecommand*{\hr}[1][class-arg]{%
+    \hspace*{\fill}\hrulefill\hspace*{\fill}
+    \vskip 0.65\baselineskip
+}
+
+\newcommand{\todo}[1]{\ifdebug \textcolor{red}{\small (#1) \marginpar{\small\textcolor{red}{to-do}}} \fi}
+
+\newcommand{\dnote}[1]{\ifdebug \textcolor{blue}{\small (David: #1)} \fi}
+
+
+\newcommand{\qq}[1]{``#1''}
+\newcommand{\q}[1]{`#1'}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\brac}[1]{\left(#1\right)}
+\newcommand{\sbrac}[1]{\left[#1\right]}
+\newcommand{\cbrac}[1]{\left\{#1\right\}}
+\newcommand{\vbrac}[1]{\left\langle#1\right\rangle}
+\newcommand{\eval}[3]{\left.#1\right|_{#2}^{#3}}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+\NewDocumentCommand{\prob}{mg}{
+    \IfValueTF{#2}{
+        P(#1 \,\vert\, #2)
+    }{
+        P(#1)
+    }
+}
+
+%
+\newcommand\restr[2]{{
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  %\vphantom{\big|} % pretend it's a little taller at normal size (comment out if not needed)
+  \right|_{#2} % this is the delimiter
+  }}
+
+% fix chi subscript
+\let\latexchi\chi
+\makeatletter
+\renewcommand\chi{\@ifnextchar_\sub@chi\latexchi}
+\newcommand{\sub@chi}[2]{% #1 is _, #2 is the subscript
+  \@ifnextchar^{\subsup@chi{#2}}{\latexchi^{}_{#2}}%
+}
+\newcommand{\subsup@chi}[3]{% #1 is the subscript, #2 is ^, #3 is the superscript
+  \latexchi_{#1}^{#3}%
+}
+\makeatother
+
+%% Custom mathematical symbols
+% Short symbols
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\d}{\,\mathrm{d}}
+% Sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% = Symbols
+\newcommand{\eqdef}{\mathop{\mathrel{\stackrel{\smash{\scriptscriptstyle\mathrm{def}}}{=}}}}
+% Functions
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle#1|#2\rangle}
+\newcommand{\corre}[1]{\langle#1\rangle}
+\newcommand{\inprod}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\presen}[2]{\langle#1:#2 \rangle}
+\renewcommand{\arg}{\mathop{\mathrm{arg}}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\convol}{\mathop{\ast}}
+\newcommand{\sign}{\mathop{\mathrm{sign}}}
+\newcommand{\sinc}{\mathop{\mathrm{sinc}}}
+\newcommand{\Real}{\mathfrak{R}}
+\newcommand{\Imag}{\mathfrak{I}}
+\newcommand{\dom}{\mathrm{Dom}}
+\newcommand{\Tr}[1]{\mathrm{Tr}\left(#1\right)}
+\newcommand{\Span}{\mathrm{Span}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
